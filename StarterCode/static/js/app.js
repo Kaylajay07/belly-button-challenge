@@ -59,25 +59,39 @@ function makeCharts(sample){
             x: sample_values.slice(0,10).reverse(),
             y: yticks,
             text: otu_labels.slice(0,10).reverse(),
-            orientation: 'h'
+            orientation: 'h',
+           
           }];
+        var barLayout = {
+            title: 'Top 10 Bacteria Cultures Found',
+            xaxis: { title: 'Number of Bacteria' },
+            height: 500,
+            width: 900
+          }
+
           
-          Plotly.newPlot("bar", barData);
+          Plotly.newPlot("bar", barData, barLayout);
 
 
           var trace1 = {
             x: otu_ids,
             y: sample_values,
             mode: 'markers',
+            text: otu_labels,
             marker: {
-              size: sample_values
+              size: sample_values,
+              color: otu_ids,
+              colorscale: 'Portland'
             }
           };
           
           var bubbleData = [trace1];
           
           var bubbleLayout = {
-            title: 'Marker Size',
+            title: 'Bacteria Cultures Per Sample',
+            yaxis: {title: 'Number of Bacteria'},
+            xaxis: {title: 'OTU ID'}
+
             
           };
           
@@ -85,30 +99,7 @@ function makeCharts(sample){
           
           
           
-          var gaugeData = [
-            {
-              domain: { x: [0, 1], y: [0, 1] },
-              value: wfreq,
-              title: { text: "Belly Button Wash Frequency" },
-              type: "indicator",
-              mode: "gauge+number",
-              gauge: {
-                axis: { range: [null, 10] },
-                steps: [
-                  { range: [0, 2], color: "lightgray" },
-                  { range: [2, 4], color: "gray" },
-                  { range: [4, 6], color: "gray" },
-                  { range: [6, 8], color: "gray" },
-                  { range: [8, 10], color: "gray" },
-                ],
-                
-                
-              }
-            }
-          ];
-          
-          var gaugeLayout = { width: 600, height: 450, margin: { t: 0, b: 0 } };
-          Plotly.newPlot('gauge', gaugeData, gaugeLayout);
+         
               
     })
 }
